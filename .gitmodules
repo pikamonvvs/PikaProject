@@ -1,0 +1,8 @@
+[submodule "PikaLLVM-backend"]
+	path = PikaLLVM-backend
+	url = https://github.com/pikamonvvs/PikaLLVM-backend.git
+	branch = master
+[submodule "PikaRISC"]
+	path = PikaRISC
+	url = https://github.com/pikamonvvs/PikaRISC.git
+	branch = master
