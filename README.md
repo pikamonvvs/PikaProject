@@ -26,8 +26,6 @@ PIKA 프로젝트는 목표는 최대한 간단한 CPU 아키텍처를 나름대
 
 PIKA 프로젝트의 전체적인 흐름은 아래와 같습니다.
 
-[PIKA Flow Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Flow%20Diagram.png)
-
 ![PIKA Flow Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Flow%20Diagram.png)
 
 C언어로 작성된 소스 코드를 입력으로 받습니다. Clang을 통하여 소스 코드를 LLVM IR로 변환하며, PIKA 컴파일러 백엔드를 이용하여 LLVM IR을 PIKA Target Dependent 기계어 코드로 변환합니다. 생성된 파일 형태의 기계어 코드를 PIKA 프로세서의 testbench의 입력으로 넣으면 Gtkwave를 통해 시각적인 Waveform 형태로 Simulation할 수 있습니다.
@@ -106,6 +104,8 @@ PIKA 아키텍처의 스펙은 아래와 같습니다.
 
 * Register Table
 
+![PIKA Register Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Register%20Set.png)
+
 ```
 1. General Purpose Registers (Caller-Saved)
 +----+----+----+----+----+----+
@@ -136,19 +136,11 @@ PIKA 아키텍처의 스펙은 아래와 같습니다.
  (x = reserved)
 ```
 
-컬러 버전은 아래와 같습니다.
-
-[PIKA Register Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Register%20Set.png)
-
-![PIKA Register Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Register%20Set.png)
-
 ### 1.3. Instruction Set
 
 총 38개의 명령어로 구성되어 있습니다. 산술/논리/시프트/이동 연산, 비교 연산, 분기, 메모리 접근, 프로시저 호출/복귀 명령어로 구성되어 있습니다.
 
 명령어 명세표는 아래와 같습니다.
-
-[PIKA Instruction Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Instruction%20Set.png)
 
 ![PIKA Instruction Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Instruction%20Set.png)
 
@@ -280,8 +272,6 @@ Verilog HDL을 이용하여 PIKA 아키텍처에 정의된 명령어를 수행�
 ### 3.2. 전체 구조
 
 PIKA 프로세서의 전체적인 구조는 아래와 같습니다.
-
-[PIKA Structural Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Structural%20Diagram.png)
 
 ![PIKA Structural Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Structural%20Diagram.png)
 
