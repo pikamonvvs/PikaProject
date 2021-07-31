@@ -1,3 +1,4 @@
+
 # A Pika Project!
 
 Pika Project를 방문해주셔서 감사합니다.
@@ -174,7 +175,7 @@ make 4.2.1
 sudo apt install -y gcc g++ make cmake ninja-build libncurses5
 ```
 
-### 2.2 빌드 방법
+### 2.2. 빌드 방법
 
 아래의 방법으로 빌드할 수 있습니다.
 
@@ -195,7 +196,7 @@ ninja (또는 ninja -j 8)
 빌드되는 데에 약 1~2시간 정도 소요됩니다. (물론 환경에 따라 다릅니다.)
 시간 단축을 위해 ninja 명령어에 -j 옵션을 줄 수 있습니다. 다만 Out-of-memory가 발생하지 않도록 주의하여야 합니다. 만약 OOM이 발생하여도, 다시 ninja를 실행함으로써 이어서 빌드할 수 있습니다.
 
-### 2.3 사용법
+### 2.3. 사용법
 
 빌드가 완료되면 build/bin 폴더 안에 llc 등의 프로그램이 생성된 것을 볼 수 있습니다.
 
@@ -330,11 +331,11 @@ make
 
 본 코드가 실제 FPGA 위에서 합성 가능한지 검증되지 않았습니다. 추후 Xilinx Vivado 툴을 이용하여 합성 및 Program 예정입니다.
 
-## 6. 참고문헌
+## 5. 참고문헌
  
 본 프로젝트를 진행하는데 도움을 준 수많은 자료들 및 기여자분들께 감사합니다!
 
-### 6.1. Web Sites
+### 5.1. Web Sites
 
 * Tutorial: Creating an LLVM Backend for  the Cpu0 Architecture
 http://jonathan2251.github.io/lbd/TutorialLLVMBackendCpu0.pdf
@@ -400,7 +401,7 @@ https://www.fpga4student.com/2017/06/32-bit-pipelined-mips-processor-in-verilog-
 https://www.fpga4student.com/2017/06/32-bit-pipelined-mips-processor-in-verilog-3.html
 
 
-### 6.2. PPTs/PDFs
+### 5.2. PPTs/PDFs
 
 * Reed_Kotler.pdf
 https://llvm.org/devmtg/2012-04-12/Slides/Reed_Kotler.pdf
@@ -426,7 +427,7 @@ https://www.cs.cornell.edu/courses/cs3410/2012sp/lecture/09-pipelined-cpu-i-g.pd
 * project1.pdf
 https://web.ece.ucsb.edu/~strukov/ece154b/labs/project1.pdf
 
-### 6.3. Github
+### 5.3. Github
 
 * Cpu0 LLVM Backend Github
 https://github.com/Jonathan2251/lbd/tree/master/lbdex/Cpu0
