@@ -28,6 +28,8 @@ PIKA 프로젝트의 전체적인 흐름은 아래와 같습니다.
 
 [PIKA Flow Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Flow%20Diagram.png)
 
+![PIKA Flow Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Flow%20Diagram.png)
+
 C언어로 작성된 소스 코드를 입력으로 받습니다. Clang을 통하여 소스 코드를 LLVM IR로 변환하며, PIKA 컴파일러 백엔드를 이용하여 LLVM IR을 PIKA Target Dependent 기계어 코드로 변환합니다. 생성된 파일 형태의 기계어 코드를 PIKA 프로세서의 testbench의 입력으로 넣으면 Gtkwave를 통해 시각적인 Waveform 형태로 Simulation할 수 있습니다.
 
 ## 1. PIKA 아키텍처
@@ -138,6 +140,8 @@ PIKA 아키텍처의 스펙은 아래와 같습니다.
 
 [PIKA Register Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Register%20Set.png)
 
+![PIKA Register Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Register%20Set.png)
+
 ### 1.3. Instruction Set
 
 총 38개의 명령어로 구성되어 있습니다. 산술/논리/시프트/이동 연산, 비교 연산, 분기, 메모리 접근, 프로시저 호출/복귀 명령어로 구성되어 있습니다.
@@ -145,6 +149,8 @@ PIKA 아키텍처의 스펙은 아래와 같습니다.
 명령어 명세표는 아래와 같습니다.
 
 [PIKA Instruction Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Instruction%20Set.png)
+
+![PIKA Instruction Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Instruction%20Set.png)
 
 ### 1.4. 프로젝트 내려받기
 
@@ -276,6 +282,8 @@ Verilog HDL을 이용하여 PIKA 아키텍처에 정의된 명령어를 수행�
 PIKA 프로세서의 전체적인 구조는 아래와 같습니다.
 
 [PIKA Structural Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Structural%20Diagram.png)
+
+![PIKA Structural Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Structural%20Diagram.png)
 
 Fetch, Decode, Execute, Memory, Writeback으로 총 5단계로 구분되어 있습니다. PC와 CPSR은 레지스터 파일 안에 들어있으며, 레지스터 파일은 프로세서 안에 내장되어 있습니다. 반면에 명령어 메모리와 데이터 메모리는 프로세서 바깥으로 빼놓았습니다. 이는 테스트벤치를 통해 디버깅을 쉽게 하기 위함입니다.
 
