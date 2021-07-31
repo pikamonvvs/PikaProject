@@ -334,106 +334,154 @@ make
  
 본 프로젝트를 진행하는데 도움을 준 수많은 자료들 및 기여자분들께 감사합니다!
 
-* Web Sites
-Tutorial: Creating an LLVM Backend for  the Cpu0 Architecture
+### 6.1. Web Sites
+
+* Tutorial: Creating an LLVM Backend for  the Cpu0 Architecture
 http://jonathan2251.github.io/lbd/TutorialLLVMBackendCpu0.pdf
-Writing an LLVM Backend — LLVM 10 documentation
+
+* Writing an LLVM Backend — LLVM 10 documentation
 https://llvm.org/docs/WritingAnLLVMBackend.html
-The LLVM Target-Independent Code Generator — LLVM 10 documentation
+
+* The LLVM Target-Independent Code Generator — LLVM 10 documentation
 https://llvm.org/docs/CodeGenerator.html
-LLVM Instruction Set
+
+* LLVM Instruction Set
 https://llvm.org/docs/LangRef.html#instruction-reference
-LLVM SDNode 종류
+
+* LLVM SDNode 종류
 https://llvm.org/doxygen/namespacellvm_1_1ISD.html#a22ea9cec080dd5f4f47ba234c2f59110a0158ee47dfa868be5d28e2cbef70d5d0
-TableGen — LLVM 10 documentation
+
+* TableGen — LLVM 10 documentation
 http://llvm.org/docs/TableGen/index.html
-What is MC Layer?
+
+* What is MC Layer?
 https://llvm.org/docs/CodeGenerator.html#the-mc-layer
-Generating object files — Tutorial: Creating an LLVM Backend for the Cpu0 Architecture
+
+* Generating object files — Tutorial: Creating an LLVM Backend for the Cpu0 Architecture
 https://jonathan2251.github.io/lbd/genobj.html
-Global variables — Tutorial: Creating an LLVM Backend for the Cpu0 Architecture
+
+* Global variables — Tutorial: Creating an LLVM Backend for the Cpu0 Architecture
 https://jonathan2251.github.io/lbd/globalvar.html
-LLVM: llvm::TargetLowering Class Reference
+
+* LLVM: llvm::TargetLowering Class Reference
 https://llvm.org/doxygen/classllvm_1_1TargetLowering.html
-LLVM Language Reference Manual — LLVM 10 documentation
+
+* LLVM Language Reference Manual — LLVM 10 documentation
 https://llvm.org/docs/LangRef.html#terminator-instructions
-B, BL, BX and BLX - TRACE32
+
+* B, BL, BX and BLX - TRACE32
 http://trace32.com/wiki/index.php/B,_BL,_BX_and_BLX
-Chapter2 - Instruction Set
+
+* Chapter2 - Instruction Set
 http://aelmahmoudy.users.sourceforge.net/electronix/arm/chapter2.htm
-D17063 Add LLVM_FALLTHROUGH macro to Compiler.h
+
+* D17063 Add LLVM_FALLTHROUGH macro to Compiler.h
 https://reviews.llvm.org/D17063
-The Design of a Custom 32-bit RISC CPU and LLVM Compiler Backend
+
+* The Design of a Custom 32-bit RISC CPU and LLVM Compiler Backend
 https://scholarworks.rit.edu/cgi/viewcontent.cgi?article=10699&context=theses
-Data types — FPGA designs with Verilog and SystemVerilog documentation
+
+* Data types — FPGA designs with Verilog and SystemVerilog documentation
 https://verilogguide.readthedocs.io/en/latest/verilog/datatype.html
-SystemVerilog repeat and forever loop - Verification Guide
+
+* SystemVerilog repeat and forever loop - Verification Guide
 https://verificationguide.com/systemverilog/systemverilog-repeat-and-forever-loop/#repeat_loop_syntax
-Condition Codes 1: Condition flags and codes - Processors blog - Processors - Arm Community
+
+* Condition Codes 1: Condition flags and codes - Processors blog - Processors - Arm Community
 https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/condition-codes-1-condition-flags-and-codes
-Pipelined MIPS Processor in Verilog (Part-1) - FPGA4student.com
+
+* Pipelined MIPS Processor in Verilog (Part-1) - FPGA4student.com
 https://www.fpga4student.com/2017/06/32-bit-pipelined-mips-processor-in-verilog-1.html
-Pipelined MIPS Processor in Verilog (Part-2) - FPGA4student.com
+
+* Pipelined MIPS Processor in Verilog (Part-2) - FPGA4student.com
 https://www.fpga4student.com/2017/06/32-bit-pipelined-mips-processor-in-verilog-2.html
-Pipelined MIPS Processor in Verilog (Part-3) - FPGA4student.com
+
+* Pipelined MIPS Processor in Verilog (Part-3) - FPGA4student.com
 https://www.fpga4student.com/2017/06/32-bit-pipelined-mips-processor-in-verilog-3.html
 
-* PPTs/PDFs
-Reed_Kotler.pdf
+
+### 6.2. PPTs/PDFs
+
+* Reed_Kotler.pdf
 https://llvm.org/devmtg/2012-04-12/Slides/Reed_Kotler.pdf
-Building an LLVM backend.pdf
+
+* Building an LLVM backend.pdf
 https://llvm.org/devmtg/2014-04/PDFs/Talks/Building%20an%20LLVM%20backend.pdf
-MSP430 Architecture pdf
+
+* MSP430 Architecture pdf
 http://www.electronics.teipir.gr/menu_el/personalpages/papageorgas/download/mcu_embedded/ti_india/vtu_lecture2.pdf
-llvm 소개
+
+* llvm 소개
 https://www.slideshare.net/minhyuks/llvm-49666289
-Tutorial: Building a backend in 24 hours : Anton_Korobeynikov.pdf
+
+* Tutorial: Building a backend in 24 hours : Anton_Korobeynikov.pdf
 http://llvm.org/devmtg/2009-10/Korobeynikov_BackendTutorial.pdf
-LLVM Backend の紹介
+
+* LLVM Backend の紹介
 https://www.slideshare.net/AkiraMaruoka/llvm-backend
-Microsoft PowerPoint - 09-pipelined-cpu-i
+
+* Microsoft PowerPoint - 09-pipelined-cpu-i
 https://www.cs.cornell.edu/courses/cs3410/2012sp/lecture/09-pipelined-cpu-i-g.pdf
-project1.pdf
+
+* project1.pdf
 https://web.ece.ucsb.edu/~strukov/ece154b/labs/project1.pdf
 
+### 6.3. Github
 
-* Github
-Cpu0 LLVM Backend Github
+* Cpu0 LLVM Backend Github
 https://github.com/Jonathan2251/lbd/tree/master/lbdex/Cpu0
-GitHub - llvm-mirror
+
+* GitHub - llvm-mirror
 https://github.com/llvm-mirror/llvm
-GitHub - llvm-mirror/llvm/lib/Target/MSP430
+
+* GitHub - llvm-mirror/llvm/lib/Target/MSP430
 https://github.com/llvm-mirror/llvm/tree/master/lib/Target/MSP430
-GitHub - cpu0 llvm backend
+
+* GitHub - cpu0 llvm backend
 https://github.com/Jonathan2251/lbd
-ValueTypes td
+
+* ValueTypes td
 https://github.com/llvm-mirror/llvm/blob/master/include/llvm/CodeGen/ValueTypes.td
-Target td
+
+* Target td
 https://github.com/llvm-mirror/llvm/blob/master/include/llvm/Target/Target.td
-TargetSelectionDAG td
+
+* TargetSelectionDAG td
 https://github.com/llvm-mirror/llvm/blob/master/include/llvm/Target/TargetSelectionDAG.td
-TargetRegistry.h
+
+* TargetRegistry.h
 https://github.com/llvm-mirror/llvm/blob/master/include/llvm/Support/TargetRegistry.h
-GitHub - frasercrmck/llvm-leg
+
+* GitHub - frasercrmck/llvm-leg
 https://github.com/frasercrmck/llvm-leg
-llvm-openrisc/lib/Target/OpenRISC at openrisc · asl/llvm-openrisc
+
+* llvm-openrisc/lib/Target/OpenRISC at openrisc · asl/llvm-openrisc
 https://github.com/asl/llvm-openrisc/tree/openrisc/lib/Target/OpenRISC
-style-guides/VerilogCodingStyle.md at master · lowRISC/style-guides
+
+* style-guides/VerilogCodingStyle.md at master · lowRISC/style-guides
 https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md
-chsasank/ARM7: Implemetation of pipelined ARM7TDMI processor in Verilog
+
+* chsasank/ARM7: Implemetation of pipelined ARM7TDMI processor in Verilog
 https://github.com/chsasank/ARM7
-takah29/arm-cpu: Armv5 single-cycle processor
+
+* takah29/arm-cpu: Armv5 single-cycle processor
 https://github.com/takah29/arm-cpu
-connorjan/llvm-cjg: An LLVM backend for my custom 32-bit RISC CPU The Design of a https://scholarworks.rit.edu/theses/9550/
+
+* connorjan/llvm-cjg: An LLVM backend for my custom 32-bit RISC CPU The Design of a https://scholarworks.rit.edu/theses/9550/
 https://github.com/connorjan/llvm-cjg
-connorjan/cjg_risc: The final version of my custom 32-bit RISC CPU
+
+* connorjan/cjg_risc: The final version of my custom 32-bit RISC CPU
 https://github.com/connorjan/cjg_risc
-neelkshah/MIPS-Processor: 5-stage pipelined 32-bit MIPS microprocessor in Verilog
+
+* neelkshah/MIPS-Processor: 5-stage pipelined 32-bit MIPS microprocessor in Verilog
 https://github.com/neelkshah/MIPS-Processor
-kavinr/5-Stage-MIPS: 5 Stage Pipelined MIPS Processor Implementation in Verilog
+
+* kavinr/5-Stage-MIPS: 5 Stage Pipelined MIPS Processor Implementation in Verilog
 https://github.com/kavinr/5-Stage-MIPS
-MIPS-pipeline-processor/modules/pipeRegisters at master · mhyousefi/MIPS-pipeline-processor · GitHub
+
+* MIPS-pipeline-processor/modules/pipeRegisters at master · mhyousefi/MIPS-pipeline-processor · GitHub
 https://github.com/mhyousefi/MIPS-pipeline-processor/tree/master/modules/pipeRegisters
-GitHub - maze1377/pipeline-mips-verilog: A classic 5-stage pipeline MIPS 32-bit processor. solve every hazard with stall
+
+* GitHub - maze1377/pipeline-mips-verilog: A classic 5-stage pipeline MIPS 32-bit processor. solve every hazard with stall
 https://github.com/maze1377/pipeline-mips-verilog
 
