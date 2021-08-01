@@ -4,7 +4,7 @@
 Pika Project를 방문해주셔서 감사합니다.
 
 본 프로젝트에서는 PIKA라는 자작 "32비트 RISC CPU 아키텍처"를 소개합니다.
-PIKA 아키텍처와 그를 기반으로 한 컴파일러 백엔드 및 프로세서를 구현한 프로젝트입니다.
+CPU 아키텍처와 그를 기반으로 한 컴파일러 백엔드 및 프로세서를 구현한 프로젝트입니다.
 
 크게 아래 세 가지로 구성됩니다.
 
@@ -17,11 +17,11 @@ PIKA 아키텍처와 그를 기반으로 한 컴파일러 백엔드 및 프로�
 
 ### 1.1. 목표
 
-PIKA 프로젝트는 목표는 최대한 간단한 CPU 아키텍처를 나름대로 직접 정의해보는 것입니다. 정의한 아키텍처의 명세에 맞춰 기계어 코드를 생성해내는 컴파일러와, 생성된 기계어 코드를 실행하는 프로세서를 만드는 것입니다.
+PIKA 프로젝트의 목표는 최대한 간단한 CPU 아키텍처를 나름대로 직접 정의해보는 것입니다. 정의한 아키텍처의 명세에 맞춰 기계어 코드를 생성해내는 컴파일러와, 생성된 기계어 코드를 실행하는 프로세서를 만드는 것입니다.
 
 ### 1.2. 기간
 
-약 6개월 정도로 추정됩니다. 2020년 8월부터 2021년 8월까지 진행하였으나, 중간에 몇 달간 프로젝트를 중단한 점, 프로젝트를 주말에만 진행하였다는 점 등을 감안하여 합리적으로 계산하였습니다.
+약 6개월 정도로 추산됩니다. 2020년 8월부터 2021년 8월까지 진행하였으나, 중간에 몇 달간 프로젝트를 중단한 점, 프로젝트를 주말에만 진행하였다는 점 등을 감안하여 합리적으로 계산하였습니다.
 
 ### 1.3. 전체 흐름
 
@@ -29,7 +29,7 @@ PIKA 프로젝트의 전체적인 흐름은 아래와 같습니다.
 
 ![PIKA Flow Diagram](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Flow%20Diagram.png)
 
-C언어로 작성된 소스 코드를 입력으로 받습니다. Clang을 통하여 소스 코드를 LLVM IR로 변환하며, PIKA 컴파일러 백엔드를 이용하여 LLVM IR을 PIKA Target Dependent 기계어 코드로 변환합니다. 생성된 파일 형태의 기계어 코드를 PIKA 프로세서의 testbench의 입력으로 넣으면 Gtkwave를 통해 시각적인 Waveform 형태로 Simulation할 수 있습니다.
+C언어로 작성된 소스 코드를 입력으로 받습니다. Clang을 통하여 소스 코드를 LLVM IR로 변환하며, PIKA 컴파일러 백엔드를 이용하여 LLVM IR을 PIKA Target Dependent 기계어 코드로 변환합니다. 생성된 파일 형태의 기계어 코드를 PIKA 프로세서의 Testbench의 입력으로 넣으면 Gtkwave를 통해 시각적인 Waveform 형태로 Simulation할 수 있습니다.
 
 ## 1. PIKA 아키텍처
 
@@ -42,7 +42,7 @@ PIKA라는 이름으로 간이 CPU 아키텍처를 디자인하였습니다.
 
 PIKA 아키텍처를 만들 때, 최대한 적은 명령어 수로 초보자가 직관적으로 접근하기 용이하도록 작성하려고 노력하였습니다.
 
-약 1년간의 개발 기간 끝에 PIKA 아키텍처 v1.0이 탄생하였습니다.
+약 6개월간의 개발 기간 끝에 PIKA 아키텍처가 탄생하였습니다.
 
 ### 1.1. Specification
 
@@ -81,16 +81,16 @@ PIKA 아키텍처의 스펙은 아래와 같습니다.
 * Supported Features
 
 ```
-	- Signed type
-	- multiplication
-	- division
+	- Signed Type
+	- Multiplication
+	- Division
 	- ...
 ```
 
 - Not Supported Features
 
 ```
-	- 8bit or 16bit type
+	- 8bit or 16bit Type
 	- Unsigned type
 	- Array type
 	- Floating point
@@ -120,21 +120,23 @@ PIKA 아키텍처의 스펙은 아래와 같습니다.
 
 3. Specific Registers
 +---------+---------+  +-----------+  +----+
-| r14(lp) | r15(sp) |  | r16(cpsr) |  | pc |
+| r14(sp) | r15(lr) |  | r16(cpsr) |  | pc |
 +---------+---------+  +-----------+  +----+
 
 ```
-* CPSR BIt Field Format
+
+* CPSR Bit Field Format
+
 ```
-  bit32    ...    bit 4   bit 3   bit 2   bit 1   bit 0 
+  bit31    ...    bit 4   bit 3   bit 2   bit 1   bit 0 
 +-------+-------+-------+-------+-------+-------+-------+
-|   x   |   x   |   x   |   n   |   z   |   c   |   v   |
+|   -   |   -   |   -   |   n   |   z   |   c   |   v   |
 +-------+-------+-------+-------+-------+-------+-------+
   n = negative bit
   z = zero bit
   c = carry bit
   v = overflow bit / underflow bit
- (x = reserved)
+ (- = reserved)
 ```
 
 ### 1.3. Instruction Set
@@ -145,7 +147,25 @@ PIKA 아키텍처의 스펙은 아래와 같습니다.
 
 ![PIKA Instruction Set](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Instruction%20Set.png)
 
+* Conditional Branch Instruction Bit Field Format
+
+```
+   31-26   25-22            21-0
++--------+-------+------------------------+
+| 100011 |  cond |         offset         |
++--------+-------+------------------------+
+ cond
+  JEQ = 0001
+  JGT = 0010
+  JGE = 0011
+  JLT = 0100
+  JLE = 0101
+  JNE = 0110
+```
+
 ### 1.4. 프로젝트 내려받기
+
+아래의 방법으로 전체 프로젝트를 내려받을 수 있습니다.
 
 ```
 git clone https://github.com/pikamonvvs/PikaProject.git
@@ -155,7 +175,8 @@ git submodule init && git submodule update
 
 ## 2. PIKA 컴파일러
 
-Clang-3.8.1과 본 LLVM 백엔드를 이용하면 C언어로 작성된 소스 코드로부터 PIKA 아키텍처의 바이너리를 생성할 수 있습니다. Clang-3.8.1은 루트 프로젝트 내에 첨부해두었습니다.
+Clang-3.8.1과 본 LLVM 백엔드를 이용하면 C언어로 작성된 소스 코드로부터 PIKA 아키텍처의 바이너리를 생성할 수 있습니다.
+Clang-3.8.1은 루트 프로젝트 내에 첨부해두었습니다.
 
 ### 2.1 빌드 환경
 
@@ -194,22 +215,23 @@ ninja (또는 ninja -j 8)
 ```
 
 빌드되는 데에 약 1~2시간 정도 소요됩니다. (물론 환경에 따라 다릅니다.)
-시간 단축을 위해 ninja 명령어에 -j 옵션을 줄 수 있습니다. 다만 Out-of-memory가 발생하지 않도록 주의하여야 합니다. 만약 OOM이 발생하여도, 다시 ninja를 실행함으로써 이어서 빌드할 수 있습니다.
+시간 단축을 위해 ninja 명령어에 -j 옵션을 줄 수 있습니다. 다만 Out-of-memory가 발생하지 않도록 주의하여야 합니다.
+만약 OOM이 발생하여도, 다시 ninja를 실행함으로써 이어서 빌드할 수 있습니다.
 
 ### 2.3. 사용법
 
-빌드가 완료되면 build/bin 폴더 안에 llc 등의 프로그램이 생성된 것을 볼 수 있습니다.
-
-아래의 명령어들을 이용하여 원하는 파일을 생성할 수 있습니다.
+빌드가 완료되면 build/bin 폴더 안에 llc 등의 프로그램이 생성됩니다.
 
 #### 2.3.1. 환경 변수 등록
 
-본 프로젝트에서 제공되는 프로그램을 사용하기 위해 환경 변수 등록이 필요합니다.
+생성된 프로그램을 이용하기 위해서는 bin 디렉토리의 경로를 환경 변수에 추가해주어야 합니다.
+주의할 점은 해당 디렉토리가 기존에 PC에 설치되어있을 수 있는 clang이나 llc보다 먼저 조회되기 위해 PATH 변수의 가장 앞에 추가해주어야 한다는 것입니다.
+뒤에 추가하게 되면 원치 않는 결과를 직면하게 될 것입니다. ~~(절대 경험담은 맞습니다.. T.T)~~
 
 아래 명령어들로 등록할 수 있습니다.
 
 ```
-< 순서대로 입력해주세요 >
+< 순서대로 입력해주세요! >
 export PATH=/path/to/clang-3.8.1/bin:$PATH
 export PATH=/path/to/PikaLLVM-backend/build/bin:$PATH
 ```
@@ -219,15 +241,16 @@ export PATH=/path/to/PikaLLVM-backend/build/bin:$PATH
 아래 명령어들로 원하는 파일을 생성할 수 있습니다.
 
 ```
-*.c			= C Source Code
+*.c		= C Source Code
 *.ll		= LLVM Intermediate Representation
 *.bc		= LLVM Bitcode
-*.s			= Target Assembly Code (PIKA)
-*.o			= Target Object (PIKA)
-test.hex	= Target Dependent Code (PIKA) - PikaRISC의 입력으로 사용됨.
+*.s		= Target Assembly Code (PIKA)
+*.o		= Target Object (PIKA)
+test.hex	= Target Dependent Code (PIKA) - PikaRISC의 입력으로 사용됨
 ```
 
 예) 파일명을 test.c 라고 할 때,
+
 ```
 < .c -> .ll >
 clang -emit-llvm -S -O0 -o test.ll test.c
@@ -250,7 +273,7 @@ llc -march=pika -filetype=obj -o test.o test.bc
 < .o 파일 덤프 출력 >
 llvm-objdump -s test.o
 
-< .o -> .hex >
+< .o -> .hex > - PikaRISC의 입력으로 사용하기 위한 형식
 llvm-objdump -s -j .text test.o | cut -d' ' -f3,4,5,6 | sed '1,4d' > test.hex
 
 ```
@@ -311,7 +334,9 @@ make
 
 ## 4. Future works
 
-### 1. PIKA 컴파일러
+PIKA 아키텍처는 아직 부족한 점이 많습니다. 이는 차후에 future works로서 보완되면 좋을 것 같습니다.
+
+### 4.1. PIKA 컴파일러
 
 1. 옛날 버전의 LLVM 베이스 버전
 
@@ -321,7 +346,11 @@ make
 
 실물 하드웨어 없이 기계어 코드를 검증할 수 있도록 PC용 에뮬레이터를 만드는 것도 개발 및 디버깅에 많은 도움이 될 것으로 보입니다.
 
-### 2. PIKA 프로세서
+3. 지원하는 자료형 부족
+
+아직 signed int 타입 이외에 검증되지 않았습니다. 실제 C언어에서 사용되는 타입들이 모두 이용 가능하도록 수정이 필요합니다.
+
+### 4.2. PIKA 프로세서
 
 1. CALL, RET 동작 미구현
 
