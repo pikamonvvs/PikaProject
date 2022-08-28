@@ -217,6 +217,8 @@ ninja (또는 ninja -j 8)
 시간 단축을 위해 ninja 명령어에 -j 옵션을 줄 수 있습니다. 다만 Out-of-memory가 발생하지 않도록 주의하여야 합니다.
 만약 OOM이 발생하여도, 다시 ninja를 실행함으로써 이어서 빌드할 수 있습니다.
 
+빌드 중 에러가 발생하면 먼저 ninja 명령어를 -j 옵션 없이 에러가 발생하지 않을 때까지 입력해보는 것을 추천합니다. 왜냐하면 간혹 빌드되는 순서에 의해 빌드가 실패하는 것처럼 보이기 때문입니다.
+
 ### 2.3. 사용법
 
 빌드가 완료되면 build/bin 폴더 안에 llc 등의 프로그램이 생성됩니다.
@@ -231,8 +233,10 @@ ninja (또는 ninja -j 8)
 
 ```
 < 순서대로 입력해주세요! >
-export PATH=/path/to/clang-3.8.1/bin:$PATH
-export PATH=/path/to/PikaLLVM-backend/build/bin:$PATH
+cd ../..
+export PATH=$(pwd)/clang-3.8.1/bin:$PATH
+export PATH=$(pwd)/PikaLLVM-backend/build/bin:$PATH
+echo $PATH
 ```
 
 #### 2.3.2. 파일 생성
@@ -277,6 +281,161 @@ llvm-objdump -s -j .text test.o | cut -d' ' -f3,4,5,6 | sed '1,4d' > test.hex
 
 ```
 
+## 2.4. 예제
+
+예제를 통해 C언어의 expression이 정상적으로 Assembly 코드로 변환되는지 확인해보겠습니다.
+
+아래와 같이 C언어 프로그램과 Makefile을 작성하였습니다.
+
+```
+mkdir sandbox
+cd sandbox
+vi test.c
+```
+
+* test.c
+
+```
+int main(void)
+{
+	int a = 99;
+	int b = !a;
+	if (a == b) b = a;
+	if (a <  b) b = a;
+	if (a  > b) b = a;
+	if (a <= b) b = a;
+	if (a >= b) b = a;
+	if (a != b) b = a;
+
+	return 0;
+}
+```
+
+```
+vi Makefile
+```
+
+* Makefile
+
+```
+all:
+	clang -emit-llvm -S -O0 -o test.ll test.c
+	llvm-as -o test.bc test.ll
+	llc -march=pika -o test.s test.ll
+	llc -march=pika -filetype=obj -o test.o test.ll
+	llc -march=pika -o test.s test.bc
+	llc -march=pika -filetype=obj -o test.o test.bc
+	llvm-objdump -s -j .text test.o | cut -d' ' -f3,4,5,6 | sed '1,4d' > test.hex
+
+clean:
+	rm -f *.ll
+	rm -f *.bc
+	rm -f *.s
+	rm -f *.o
+	rm -f *.hex
+```
+
+```
+make
+```
+
+그러면 아래와 같이 산출물이 생성되는 것을 볼 수 있습니다.
+
+```
+> ls
+
+Makefile  test.bc  test.c  test.hex  test.ll  test.o  test.s
+```
+
+PIKA Target Assembly Code를 확인해봅시다.
+
+```
+> cat test.s
+
+...
+main:            # @main
+# BB#0:
+        sub sp, sp, #12
+        movl r0, #0
+        str r0, [sp, #8]
+        movl r1, #99
+        str r1, [sp, #4]
+        str r0, [sp]
+        ld  r0, [sp, #4]
+        cmp r0, #0
+        jne .LBB0_2
+# BB#1:
+        ld  r0, [sp, #4]
+        str r0, [sp]
+.LBB0_2:
+        ld  r0, [sp, #4]
+        ld  r1, [sp]
+        cmp r0, r1
+        jge .LBB0_4
+# BB#3:
+        ld  r0, [sp, #4]
+        str r0, [sp]
+.LBB0_4:
+        ld  r0, [sp, #4]
+        ld  r1, [sp]
+        cmp r1, r0
+        jge .LBB0_6
+# BB#5:
+        ld  r0, [sp, #4]
+        str r0, [sp]
+.LBB0_6:
+        ld  r0, [sp, #4]
+        ld  r1, [sp]
+        cmp r1, r0
+        jlt .LBB0_8
+# BB#7:
+        ld  r0, [sp, #4]
+        str r0, [sp]
+.LBB0_8:
+        ld  r0, [sp, #4]
+        ld  r1, [sp]
+        cmp r0, r1
+        jlt .LBB0_10
+# BB#9:
+        ld  r0, [sp, #4]
+        str r0, [sp]
+.LBB0_10:
+        ld  r0, [sp, #4]
+        ld  r1, [sp]
+        cmp r0, r1
+        jeq .LBB0_12
+# BB#11:
+        ld  r0, [sp, #4]
+        str r0, [sp]
+.LBB0_12:
+        movl r0, #0
+        add sp, sp, #12
+        ret
+...
+```
+
+자세히 보면 위의 어셈블리 코드가 PIKA Instruction Set에 정의된 어셈블리 명령어들로 구성된 것을 볼 수 있습니다.
+
+이번엔 Target Binary를 열어봅시다.
+
+```
+> cat test.hex
+
+0c00b82f 00000004 08e00094 6300400c
+04e04094 00e00094 04e00090 00000084
+0c00808d 04e00090 00e00094 04e00090
+00e04090 00400080 0c00c08c 04e00090
+00e00094 04e00090 00e04090 00000480
+0c00c08c 04e00090 00e00094 04e00090
+00e04090 00000480 0c00008d 04e00090
+00e00094 04e00090 00e04090 00400080
+0c00008d 04e00090 00e00094 04e00090
+00e04090 00400080 0c00408c 04e00090
+00e00094 00000004 0c00b827 0000009c
+```
+
+PIKA는 Little Endian을 사용하기 때문에, 맨 첫 줄의 "0c00b82f"는 "2fb8000c"로 변환됩니다. 이는 "001011 1110 1110 000000000000001100" 와 같으며, "SUBri r14(=SP) r14(=SP) #12"와 같습니다. 즉 정상적으로 변환되었다고 볼 수 있으며, 다른 명령어도 동일한 방법으로 검증할 수 있습니다.
+
 ## 3. PIKA 프로세서
 
 Verilog HDL을 이용하여 PIKA 아키텍처에 정의된 명령어를 수행하는 프로세서를 구현하였습니다. 
@@ -307,29 +466,78 @@ Fetch, Decode, Execute, Memory, Writeback으로 총 5단계로 구분되어 있�
 아래 환경에서 컴파일 및 시뮬레이션 하였습니다.
 
 ```
-Windows 10
-iverilog 12.0 (devel)
-gtkwave 3.3.108
+Ubuntu 20.04
+iverilog & vvp 11.0 (stable)
+gtkwave 3.3.104
+make 4.2.1
 ```
 
-(※주의: gtkwave는 반드시 GUI 환경에서 실행되어야 합니다.)
+위의 도구들이 설치되어있지 않다면, 아래의 명령어로 설치할 수 있습니다.
+
+```
+sudo apt install -y iverilog gtkwave make
+```
 
 ### 3.4. 컴파일 및 시뮬레이션 방법
 
 컴파일은 iverilog를 이용하였으며, 시뮬레이션은 vvp와 gtkwave를 이용하였습니다.
 
-아래의 방법으로 컴파일 및 시뮬레이션할 수 있습니다. testbench.v
+먼저 test.hex 파일을 프로젝트의 root 디렉토리로 가져옵니다.
 
 ```
+# test.hex 가져오기
+mv test.hex PikaRISC
+cd PikaRISC
+```
+
+그리고 아래의 방법으로 컴파일 및 시뮬레이션할 수 있습니다.
+
+```
+# 테스트벤치 빌드 및 시뮬레이션
 iverilog -I sources/ -DFOR_TEST -o test.vvp testbench.v
 vvp test.vvp
 gtkwave test.vcd
 ```
+
 또는 프로젝트 내에 Makefile을 만들어 두었으므로, make를 통해 동일한 명령을 수행할 수 있습니다.
 
 ```
 make
 ```
+
+(※주의: gtkwave는 반드시 GUI 환경에서 실행되어야 합니다.)
+
+## 3.5. 예제
+
+LLVM 예제에서 생성한 test.hex 파일을 이용하여 RISC를 테스트해보겠습니다.
+
+test.hex는 아래와 같습니다.
+
+```
+> cat test.hex
+
+0c00b82f 00000004 08e00094 6300400c
+04e04094 00e00094 04e00090 00000084
+0c00808d 04e00090 00e00094 04e00090
+00e04090 00400080 0c00c08c 04e00090
+00e00094 04e00090 00e04090 00000480
+0c00c08c 04e00090 00e00094 04e00090
+00e04090 00000480 0c00008d 04e00090
+00e00094 04e00090 00e04090 00400080
+0c00008d 04e00090 00e00094 04e00090
+00e04090 00400080 0c00408c 04e00090
+00e00094 00000004 0c00b827 0000009c
+```
+
+이를 프로젝트의 root 디렉토리에 넣은 후 make를 실행합니다.
+
+```
+make
+```
+
+그러면 자동으로 gtkwave가 실행되며, 시뮬레이션 결과를 볼 수 있습니다.
+
+![PikaRISC Simulation Result](https://github.com/pikamonvvs/PikaProject/blob/master/resources/Simulation%20Result.png)
 
 ## 4. Future works
 
